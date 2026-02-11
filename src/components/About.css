@@ -1,0 +1,456 @@
+/* Halcyon Grid Layout */
+.halcyon-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr 260px;
+    grid-template-rows: 260px 220px;
+    gap: 1rem;
+    max-width: 900px;
+    margin: 3rem auto 0;
+}
+
+/* Base Card Styles - Glassmorphism */
+.h-card {
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.h-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+    z-index: 2;
+}
+
+/* 1. Profile Photo (Top Right -> Top Left) */
+.h-profile {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    background: rgba(219, 234, 254, 0.1);
+    /* Very subtle blue tint */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* 2. Experience/Container (Bottom Left -> Top Right Spanning) */
+/* 2. Experience/Container (Bottom Left -> Top Right Spanning) */
+.h-experience {
+    grid-column: 2 / 4;
+    grid-row: 1 / 2;
+    background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    color: white;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 3. Middle Stack (Top Middle -> Bottom Left) */
+.h-stack {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* 4. Visual Card (Top Left -> Bottom Middle) */
+.h-visual {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    /* Slight tint */
+}
+
+/* 5. Mobile/Contact (Bottom Right -> Bottom Right) */
+/* 5. Location/Map (Bottom Right) */
+.h-map {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    position: relative;
+    overflow: hidden;
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.h-visual-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80') center/cover;
+    opacity: 0.6;
+    transition: transform 0.5s ease;
+}
+
+.status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #34d399;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+.pulsing-dot {
+    width: 6px;
+    height: 6px;
+    background: #34d399;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 4px rgba(52, 211, 153, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+    }
+}
+
+.h-visual:hover .h-visual-bg {
+    transform: scale(1.05);
+}
+
+.h-notification {
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker glass for contrast */
+    backdrop-filter: blur(12px);
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    z-index: 2;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h-avatar {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.h-notif-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.h-notif-name {
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.h-notif-msg {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.h-notif-time {
+    font-size: 0.7rem;
+    opacity: 0.5;
+}
+
+
+/* Middle Stack Inner Styles */
+
+/* Education Cards Inner Styles */
+.h-edu {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: rgba(59, 66, 85, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    justify-content: flex-start;
+}
+
+.h-college {
+    background: rgba(30, 41, 59, 0.6);
+}
+
+.h-school {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.edu-icon {
+    font-size: 1.5rem;
+    min-width: 36px;
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.edu-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.edu-name {
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: white;
+    /* max-width: 140px; removed to fit long names better in flex */
+}
+
+.edu-score {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    color: #93c5fd;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* Profile Photo Inner Styles */
+
+.h-profile-img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    opacity: 0.9;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    transform: scale(1.8);
+}
+
+.h-profile:hover .h-profile-img {
+    transform: scale(2.1);
+    opacity: 1;
+}
+
+
+/* Experience Inner Styles */
+
+.exp-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.exp-label {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+    color: #93c5fd;
+}
+
+.exp-bio {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    font-weight: 400;
+    max-width: 90%;
+}
+
+.highlight {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.exp-tags {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.exp-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #bfdbfe;
+}
+
+.exp-icon-large {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    font-size: 6rem;
+    opacity: 0.1;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/* Mobile Inner Styles */
+
+/* Map Card Inner Styles */
+
+.map-frame-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.h-map .leaflet-container {
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+.h-map:hover .leaflet-container {
+    transform: scale(1.05);
+}
+
+/* Apple Maps Overlay UI */
+.apple-map-ui {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.am-control {
+    width: 32px;
+    height: 32px;
+    background: rgba(44, 44, 46, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4da6ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.h-map:hover .am-control {
+    transform: scale(1.05);
+    background: rgba(60, 60, 62, 0.9);
+}
+
+.am-icon {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .halcyon-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .h-profile {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        height: 240px;
+    }
+
+    .h-stack {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .h-visual {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+
+    .h-experience {
+        grid-column: 1 / 3;
+        grid-row: 3 / 4;
+    }
+
+    .h-map {
+        grid-column: 1 / 3;
+        grid-row: 4 / 5;
+        height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .halcyon-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .h-profile,
+    .h-stack,
+    .h-visual,
+    .h-experience,
+    .h-map {
+        grid-column: 1 / 2;
+        grid-row: auto;
+    }
+
+    .h-stack {
+        flex-direction: row;
+    }
+
+    .h-edu {
+        flex: 1;
+        height: auto;
+        min-height: 120px;
+    }
+}

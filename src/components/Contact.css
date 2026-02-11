@@ -1,0 +1,162 @@
+.contact {
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2rem;
+}
+
+.contact-wrapper {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+/* Move underline closer to title on Contact page only */
+.contact .title-underline {
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Social Icons Container */
+.social-icons-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 2.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 60px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icons-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons-container:hover::before {
+    opacity: 1;
+}
+
+/* Individual Social Icon */
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--icon-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+}
+
+.social-icon-link:hover::before {
+    opacity: 0.15;
+}
+
+.social-icon-link:hover {
+    transform: translateY(-5px) scale(1.1);
+    border-color: var(--icon-color);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+}
+
+.social-icon-link svg {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.social-icon-link:hover svg {
+    transform: scale(1.1);
+}
+
+/* Responsive Design - Reduce vertical spacing on mobile */
+@media (max-width: 768px) {
+    .contact {
+        min-height: 20vh;
+        padding: 1.5rem 1.5rem;
+    }
+
+    .contact .title-underline {
+        margin-top: 0.3rem;
+        margin-bottom: 2rem;
+    }
+
+    .contact-title {
+        margin-bottom: 0.3rem;
+    }
+
+    .social-icons-container {
+        gap: 1rem;
+        padding: 0.875rem 1.75rem;
+    }
+
+    .social-icon-link {
+        width: 40px;
+        height: 40px;
+    }
+
+    .social-icon-link svg {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact {
+        min-height: 15vh;
+        padding: 1rem 1rem;
+    }
+
+    .contact .title-underline {
+        margin-top: 0.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .social-icons-container {
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .social-icon-link {
+        width: 36px;
+        height: 36px;
+    }
+
+    .social-icon-link svg {
+        width: 22px;
+        height: 22px;
+    }
+}
