@@ -237,6 +237,7 @@ a:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
   background: #e2e8f0;
+  color: black;
 }
 
 .btn-outline {

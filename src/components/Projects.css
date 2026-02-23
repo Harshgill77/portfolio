@@ -11,36 +11,29 @@
 }
 
 .projects-scroll-container {
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     margin-top: 3rem;
+    cursor: grab;
+    touch-action: pan-y;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    -webkit-overflow-scrolling: touch;
+}
+
+.projects-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.projects-scroll-container:active {
+    cursor: grabbing;
 }
 
 .projects-horizontal {
     display: flex;
     padding: 1rem 0;
     width: max-content;
-    will-change: transform;
-    animation: infinite-scroll 45s linear infinite;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-}
-
-.projects-horizontal.paused {
-    animation-play-state: paused;
-}
-
-@keyframes infinite-scroll {
-    0% {
-        transform: translate3d(0, 0, 0);
-    }
-
-    100% {
-        transform: translate3d(-50%, 0, 0);
-    }
 }
 
 /* Project Card */

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './Projects.css';
 
 const projectsData = [
@@ -20,7 +20,7 @@ const projectsData = [
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop',
     tags: ['React', 'Three.js', 'WebGL', 'GSAP'],
     liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: 'https://github.com/Harshgill77/portfolio'
   },
   {
     id: 3,
@@ -48,10 +48,72 @@ export default function Projects() {
     threshold: 0.1
   });
 
-  const [isPaused, setIsPaused] = useState(false);
+  const { ref: visibilityRef, inView: isVisible } = useInView({
+    threshold: 0
+  });
 
-  // Duplicate projects for seamless infinite scroll
-  const duplicatedProjects = [...projectsData, ...projectsData];
+  const scrollRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Triple projects for infinite scroll in both directions
+  const duplicatedProjects = [...projectsData, ...projectsData, ...projectsData];
+
+  useEffect(() => {
+    if (scrollRef.current && scrollRef.current.scrollLeft === 0) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth / 3;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return; // Pause auto-scrolling when section is off-screen to prevent lag
+
+    let animationId;
+    const scroll = () => {
+      if (scrollRef.current) {
+        const singleSetWidth = scrollRef.current.scrollWidth / 3;
+        
+        if (!isPaused && !isDragging) {
+           scrollRef.current.scrollLeft += 1.5; // Slightly slower, smoother speed
+        }
+
+        if (scrollRef.current.scrollLeft >= singleSetWidth * 2) {
+          scrollRef.current.scrollLeft -= singleSetWidth;
+        } else if (scrollRef.current.scrollLeft <= 0) {
+          scrollRef.current.scrollLeft += singleSetWidth;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+    
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused, isDragging, isVisible]);
+
+  const handleDragStart = (e) => {
+    setIsDragging(true);
+    setIsPaused(true);
+    const pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+    setStartX(pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    setIsPaused(false);
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging) return;
+    const pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+    const x = pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -73,7 +135,7 @@ export default function Projects() {
   };
 
   return (
-    <section className="projects section" id="projects">
+    <section className="projects section" id="projects" ref={visibilityRef}>
       <div className="container-full">
         <motion.div
           ref={ref}
@@ -91,16 +153,25 @@ export default function Projects() {
             </p>
           </div>
 
-          {/* Removed hover from container - now on individual cards for accuracy */}
-          <div className="projects-scroll-container">
-            <div className={`projects-horizontal ${isPaused ? 'paused' : ''}`}>
+          {/* Draggable container with native horizontal scroll for mobile and grab for desktop */}
+          <div 
+            className="projects-scroll-container"
+            ref={scrollRef}
+            onMouseDown={handleDragStart}
+            onMouseLeave={handleDragEnd}
+            onMouseUp={handleDragEnd}
+            onMouseMove={handleDragMove}
+            onTouchStart={handleDragStart}
+            onTouchEnd={handleDragEnd}
+            onTouchMove={handleDragMove}
+            onMouseEnter={() => setIsPaused(true)}
+          >
+            <div className="projects-horizontal">
               {duplicatedProjects.map((project, index) => (
                 <motion.div
                   key={`${project.id}-${index}`}
                   className="project-card glass"
                   variants={cardVariants}
-                  onMouseEnter={() => setIsPaused(true)}
-                  onMouseLeave={() => setIsPaused(false)}
                 >
                   <div className="project-image-container">
                     <div className="project-overlay">

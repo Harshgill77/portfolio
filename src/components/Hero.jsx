@@ -52,7 +52,7 @@ export default function Hero() {
 
           <motion.p variants={itemVariants} className="hero-description">
             I craft beautiful, interactive web experiences with modern technologies.
-            Specializing in React, Three.js, and creating stunning 3D interfaces.
+            Specializing in React, Three.js, and creating stunning 3D interfaces integrated with AI.
           </motion.p>
 
           <motion.div variants={itemVariants} className="hero-cta">
@@ -65,7 +65,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div 
+        {/* <motion.div 
           variants={itemVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
@@ -75,7 +75,7 @@ export default function Hero() {
             <span>Scroll Down</span>
             <div className="scroll-arrow"></div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
