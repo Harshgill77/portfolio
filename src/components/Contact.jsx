@@ -59,7 +59,7 @@ export default function Contact() {
     {
       name: 'Instagram',
       icon: InstagramIcon,
-      url: 'https://instagram.com/h.arsh_g',
+      url: 'https://instagram.com/h.arsh_gill',
       color: '#E4405F'
     },
     {
